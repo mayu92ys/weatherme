@@ -40,7 +40,16 @@ textarea{
     height:120px;
     padding:10px;
 }
+<label>今の気持ち</label>
 
+<input
+id="mood"
+type="range"
+min="1"
+max="5"
+value="3">
+
+<p id="moodText">😐 普通</p>
 select{
     width:100%;
     padding:10px;
@@ -64,7 +73,28 @@ button{
     border-radius:10px;
     white-space:pre-line;
 }
+input[type=range]{
+    width:100%;
+    margin-top:10px;
+}
 
+#moodText{
+    text-align:center;
+    font-size:18px;
+}
+
+body{
+    background:
+    linear-gradient(
+      180deg,
+      #6ec6ff,
+      #f4f7fb
+    );
+}
+
+.card{
+    backdrop-filter:blur(8px);
+}
 </style>
 </head>
 
