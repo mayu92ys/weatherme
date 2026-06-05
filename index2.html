@@ -1,0 +1,111 @@
+function createForecast() {
+
+```
+const emotion =
+    document.getElementById("emotion").value.trim();
+
+const situation =
+    document.getElementById("situation").value;
+
+if (!emotion) {
+    alert("モヤモヤを書いてください");
+    return;
+}
+
+const forecasts = {
+
+    "連絡のすれ違い": [
+        "☁ 今日のふたりの気流\n\n忙しさから小さなすれ違いが起きやすい日。\n短い一言でも思いやりが伝わります。",
+        "🌤 運気アップ予報\n\nメッセージに優しい言葉を添えると関係運が上昇しそうです。"
+    ],
+
+    "デート中": [
+        "🌈 ラッキーアクション\n\n目の前の人との時間を大切にすると運気アップ。",
+        "☀ 今日の恋愛気流\n\n笑顔で相手の話を聞くと心地よい空気が流れそうです。"
+    ],
+
+    "仕事が忙しい": [
+        "⛅ お疲れさま予報\n\n今週は頑張りすぎ注意。\n感謝の一言が幸運を呼びます。",
+        "☁ 心の天気予報\n\n少しだけ余裕を持つことで良い流れが生まれそうです。"
+    ],
+
+    "家事": [
+        "🌤 家庭運アップ\n\n小さな手助けが大きな幸運につながります。",
+        "🌈 ラッキーヒント\n\nありがとうの言葉が家庭内の運気を高めそうです。"
+    ],
+
+    "その他": [
+        "☀ 今日の運勢\n\n相手への気遣いが良い流れを作りそうです。"
+    ]
+};
+
+const options = forecasts[situation];
+
+const forecast =
+    options[Math.floor(Math.random() * options.length)];
+
+document.getElementById("forecast").innerText =
+    forecast;
+
+localStorage.setItem("forecast", forecast);
+
+const history =
+    JSON.parse(localStorage.getItem("weatherHistory") || "[]");
+
+history.push({
+    emotion,
+    situation,
+    forecast,
+    date: new Date().toLocaleString()
+});
+
+localStorage.setItem(
+    "weatherHistory",
+    JSON.stringify(history)
+);
+```
+
+}
+
+function showHistory() {
+
+```
+const history =
+    JSON.parse(localStorage.getItem("weatherHistory") || "[]");
+
+if (history.length === 0) {
+    alert("履歴はありません");
+    return;
+}
+
+let text = "";
+
+history.reverse().forEach(item => {
+
+    text +=
+        item.date +
+        "\n状況：" +
+        item.situation +
+        "\n予報：" +
+        item.forecast +
+        "\n\n";
+});
+
+alert(text);
+```
+
+}
+
+window.onload = () => {
+
+```
+const saved =
+    localStorage.getItem("forecast");
+
+if (saved) {
+    document.getElementById("forecast").innerText =
+        saved;
+}
+```
+
+};
