@@ -111,90 +111,213 @@ placeholder="モヤモヤを書いてください"></textarea>
 </div>
 
 <script>
+const moodSlider =
+document.getElementById("mood");
+
+const moodText =
+document.getElementById("moodText");
+
+moodSlider.addEventListener("input",()=>{
+
+```
+const value =
+  Number(moodSlider.value);
+
+const moods = {
+    1:"😭 とてもつらい",
+    2:"☔ モヤモヤ",
+    3:"😐 普通",
+    4:"🌤 少し前向き",
+    5:"☀ ごきげん"
+};
+
+moodText.textContent =
+  moods[value];
+```
+
+});
 
 function createForecast(){
 
-    const emotion =
-      document.getElementById("emotion").value;
+```
+const mood =
+  Number(document.getElementById("mood").value);
 
-    const situation =
-      document.getElementById("situation").value;
+const situation =
+  document.getElementById("situation").value;
 
-    let forecast = "";
+let icon = "☀";
 
-    switch(situation){
+if(mood <= 2){
+    icon = "☔";
+}
+else if(mood === 3){
+    icon = "☁";
+}
 
-        case "連絡のすれ違い":
-            forecast =
-`☁ 今日のふたりの気流
+const fortune =
+  Math.floor(Math.random()*41)+60;
 
-お互い忙しくなりやすい日です。
+let forecast = "";
+
+switch(situation){
+
+    case "連絡のすれ違い":
+
+        forecast =
+```
+
+`${icon} 今日のふたりの気流
+
+今週は少し忙しくなりやすい運勢。
 
 短いメッセージでも
 十分気持ちは伝わります。
 
-スタンプを一つ増やすと
-運気アップ。`;
-            break;
+恋愛運 ${fortune}%`;
 
-        case "デート中":
-            forecast =
-`🌤 ラッキーアクション
+```
+        break;
 
-身近な人との時間を
+    case "デート中":
+
+        forecast =
+```
+
+`${icon} ラッキーアクション
+
+目の前の人との時間を
 大切にすると運気上昇。
 
 スマホを見る時間を減らすと
-良い流れが生まれそうです。`;
-            break;
+良い流れが生まれそうです。
 
-        case "仕事が忙しい":
-            forecast =
-`⛅ お疲れさま予報
+恋愛運 ${fortune}%`;
+
+```
+        break;
+
+    case "仕事が忙しい":
+
+        forecast =
+```
+
+`${icon} お疲れさま予報
 
 今日は少し余裕を持つと吉。
 
 感謝のひと言が
-良い空気を作ります。`;
-            break;
+幸運を呼びます。
 
-        case "家事":
-            forecast =
-`🌈 家庭運アップ
+恋愛運 ${fortune}%`;
+
+```
+        break;
+
+    case "家事":
+
+        forecast =
+```
+
+`${icon} 家庭運アップ
 
 小さな手伝いが
 大きな幸運を呼びます。
 
 ありがとうの言葉が
-ラッキーアイテムです。`;
-            break;
+ラッキーアイテム。
 
-        default:
-            forecast =
-`☀ 今日の運勢
+恋愛運 ${fortune}%`;
+
+```
+        break;
+
+    default:
+
+        forecast =
+```
+
+`${icon} 今日の運勢
 
 優しい声掛けが
-良い流れを生みます。`;
-    }
+良い流れを生みます。
 
-    document.getElementById("forecast").innerText =
-      forecast;
-
-    localStorage.setItem(
-      "forecast",
-      forecast
-    );
+恋愛運 ${fortune}%`;
 }
 
-window.onload = () => {
+```
+document.getElementById("forecast")
+  .innerText = forecast;
 
-    const saved =
-      localStorage.getItem("forecast");
+localStorage.setItem(
+  "forecast",
+  forecast
+);
 
-    if(saved){
-        document.getElementById("forecast").innerText =
-          saved;
-    }
+const history =
+  JSON.parse(
+    localStorage.getItem("weatherHistory")
+    || "[]"
+  );
+
+history.push({
+    date:new Date().toLocaleString(),
+    situation,
+    mood,
+    forecast
+});
+
+localStorage.setItem(
+  "weatherHistory",
+  JSON.stringify(history)
+);
+```
+
+}
+
+function showHistory(){
+
+```
+const history =
+  JSON.parse(
+    localStorage.getItem("weatherHistory")
+    || "[]"
+  );
+
+if(history.length === 0){
+
+    alert("履歴がありません");
+    return;
+}
+
+let text = "";
+
+history.reverse().forEach(item=>{
+
+    text +=
+      item.date +
+      "\n" +
+      item.forecast +
+      "\n\n";
+});
+
+alert(text);
+```
+
+}
+
+window.onload = ()=>{
+
+```
+const saved =
+  localStorage.getItem("forecast");
+
+if(saved){
+
+    document.getElementById("forecast")
+      .innerText = saved;
+}
+```
 
 };
 
